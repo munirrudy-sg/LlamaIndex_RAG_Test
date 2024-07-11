@@ -25,7 +25,7 @@ import requests
 from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
 
-gemini_api_key = "AIzaSyBy1lRSOMIr16Yf61tUQCuUH4tWWpvV-f4"
+gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
 model = Gemini(api_key=gemini_api_key, model_name="models/gemini-1.5-flash")
 
