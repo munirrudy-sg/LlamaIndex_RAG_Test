@@ -55,7 +55,7 @@ vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
 # Get the index from the vector store
 index = VectorStoreIndex.from_vector_store(
     vector_store,
-    similarity_top_k=7
+    similarity_top_k=5
 )
 
 template = (
