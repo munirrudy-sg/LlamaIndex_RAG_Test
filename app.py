@@ -37,7 +37,7 @@ Settings.context_window = 30000
 
 configuration = {
     "client_type": "PersistentClient",
-    "path": "/tmp/.chroma"
+    "path": "./chroma_db"
 }
 
 collection_name = "promosi-bsim-20240710-v2"
