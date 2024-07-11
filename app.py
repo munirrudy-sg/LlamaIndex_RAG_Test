@@ -33,7 +33,7 @@ Settings.context_window = 30000
 collection_name = "promosi-bsim-20240710-v2"
 
 # Load from disk
-load_client = chromadb.PersistentClient(path="chroma_db")
+load_client = chromadb.PersistentClient(path="./chroma_db")
 
 # Fetch the collection
 chroma_collection = load_client.get_collection(collection_name)
