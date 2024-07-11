@@ -49,8 +49,6 @@ chroma_collection = load_client.get_collection(collection_name)
 #                                 type=ChromaDBConnection,
 #                                 **configuration)
 
-chroma_collection = conn.get_collection_data(collection_name)
-
 # Fetch the vector store
 vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
 
