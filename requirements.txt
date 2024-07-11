@@ -4,3 +4,4 @@ streamlit==1.28.1
 llama-index-llms-gemini==0.1.11
 llama-index-embeddings-gemini==0.1.8
 llama-index-vector-stores-chroma==0.1.10
+pysqlite3-binary

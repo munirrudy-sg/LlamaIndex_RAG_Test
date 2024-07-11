@@ -1,5 +1,10 @@
+__import__("pysqlite3")
+import sys
+
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+
+import chromadb
 import streamlit as st
-from bs4 import BeautifulSoup
 
 from llama_index.core import Document
 from llama_index.core import Settings
@@ -9,9 +14,6 @@ from llama_index.core import VectorStoreIndex
 from llama_index.core import PromptTemplate
 
 from llama_index.vector_stores.chroma import ChromaVectorStore
-
-import chromadb
-from streamlit_chromadb_connection.chromadb_connection import ChromadbConnection
 
 
 from llama_index.embeddings.gemini import GeminiEmbedding
@@ -28,23 +30,24 @@ Settings.chunk_size = 3000
 Settings.chunk_overlap = 64
 Settings.context_window = 30000
 
-
-# # Load from disk
-# load_client = chromadb.PersistentClient(path="chroma_db")
-
-# # Fetch the collection
-# chroma_collection = load_client.get_collection("promosi-bsim-20240710-v2")
-
-configuration = {
-    "client_type": "PersistentClient",
-    "path": "./chroma_db"
-}
-
 collection_name = "promosi-bsim-20240710-v2"
 
-conn = st.experimental_connection("chromadb",
-                                type=ChromaDBConnection,
-                                **configuration)
+# Load from disk
+load_client = chromadb.PersistentClient(path="chroma_db")
+
+# Fetch the collection
+chroma_collection = load_client.get_collection(collection_name)
+
+# configuration = {
+#     "client_type": "PersistentClient",
+#     "path": "./chroma_db"
+# }
+
+
+
+# conn = st.experimental_connection("chromadb",
+#                                 type=ChromaDBConnection,
+#                                 **configuration)
 
 chroma_collection = conn.get_collection_data(collection_name)
 
