@@ -45,7 +45,8 @@ collection_name = "promosi-bsim-20240710-v2"
 conn = st.experimental_connection("chromadb",
                                 type=ChromaDBConnection,
                                 **configuration)
-documents_collection_df = conn.get_collection_data(collection_name)
+
+chroma_collection = conn.get_collection_data(collection_name)
 
 # Fetch the vector store
 vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
