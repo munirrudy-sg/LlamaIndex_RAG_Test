@@ -1,11 +1,4 @@
 import streamlit as st
-import requests
-from bs4 import BeautifulSoup
-import csv
-import json
-import logging
-import re
-import os
 from bs4 import BeautifulSoup
 
 from llama_index.core import Document
@@ -13,14 +6,12 @@ from llama_index.core import Settings
 from llama_index.core import SimpleDirectoryReader
 from llama_index.core import StorageContext
 from llama_index.core import VectorStoreIndex
-from llama_index.readers.web import SimpleWebPageReader
 from llama_index.core import PromptTemplate
 
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
 import chromadb
-import re
-import requests
+
 
 from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
