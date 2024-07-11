@@ -11,6 +11,7 @@ from llama_index.core import PromptTemplate
 from llama_index.vector_stores.chroma import ChromaVectorStore
 
 import chromadb
+from streamlit_chromadb_connection.chromadb_connection import ChromadbConnection
 
 
 from llama_index.embeddings.gemini import GeminiEmbedding
@@ -28,11 +29,23 @@ Settings.chunk_overlap = 64
 Settings.context_window = 30000
 
 
-# Load from disk
-load_client = chromadb.PersistentClient(path="chroma_db")
+# # Load from disk
+# load_client = chromadb.PersistentClient(path="chroma_db")
 
-# Fetch the collection
-chroma_collection = load_client.get_collection("promosi-bsim-20240710-v2")
+# # Fetch the collection
+# chroma_collection = load_client.get_collection("promosi-bsim-20240710-v2")
+
+configuration = {
+    "client_type": "PersistentClient",
+    "path": "/tmp/.chroma"
+}
+
+collection_name = "promosi-bsim-20240710-v2"
+
+conn = st.experimental_connection("chromadb",
+                                type=ChromaDBConnection,
+                                **configuration)
+documents_collection_df = conn.get_collection_data(collection_name)
 
 # Fetch the vector store
 vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
