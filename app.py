@@ -30,7 +30,7 @@ Settings.chunk_size = 3000
 Settings.chunk_overlap = 64
 Settings.context_window = 30000
 
-collection_name = "promosi-bsim-20240710-v2"
+collection_name = "promosi-bsim-20240715"
 
 # Load from disk
 load_client = chromadb.PersistentClient(path="./chroma_db")
@@ -101,7 +101,7 @@ def generate_gemini_response(prompt_input):
     response = query_engine.query(prompt_input)
 
     # Step 7: Return the generated text
-    return response.response
+    return response.response, response.metadata
 
 # Example usage:
 # Assuming 'st.session_state.messages' is already populated with the required dialogue history.
@@ -119,12 +119,16 @@ if prompt := st.chat_input():
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            response = generate_gemini_response(prompt)
+            llm_response = generate_gemini_response(prompt)
+            response = llm_response[0]
+            metadata = llm_response[1]
             placeholder = st.empty()
             full_response = ''
             for item in response:
                 full_response += item
                 placeholder.markdown(full_response)
-            placeholder.markdown(full_response)
+            placeholder.markdown(full_response) 
+        with st.sidebar:
+            st.write(f"\n Metadata: \n{metadata}")
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
