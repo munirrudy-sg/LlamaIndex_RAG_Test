@@ -74,11 +74,11 @@ Question: {query_str} \nContext: {context_str} \nAnswer:"""
 llm_prompt = PromptTemplate(template)
 
 # App title
-st.set_page_config(page_title="Prissa Promotion Chatbot RAG👩‍🦰💬")
+st.set_page_config(page_title="AIDSU Chatbot RAG👩‍🦰💬")
 
 # Replicate Credentials
 with st.sidebar:
-    st.title('Prissa Promotion Chatbot RAG👩‍🦰💬')
+    st.title('AIDSU Chatbot RAG👩‍🦰💬')
     st.write('This chatbot is created using the Gemini API LLM model from Google.')
 
 # Store LLM generated responses
