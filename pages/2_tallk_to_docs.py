@@ -1,10 +1,13 @@
 import streamlit as st
 import os
-from src.ingestion import Ingestion
-from src.qachain import QAChain
 import tempfile
 from pathlib import Path
 import shutil
+import sys
+sys.path.insert(0, '..')
+from src.ingestion import Ingestion
+from src.qachain import QAChain
+
 # extracting text from document
 def get_document_text(doc):
     ingestion = Ingestion()
