@@ -3,10 +3,13 @@ from langchain.schema import Document
 from dotenv import load_dotenv
 from langchain.document_loaders.pdf import PyPDFLoader
 from langchain_community.document_loaders import Docx2txtLoader
+import streamlit as st
 from langchain.text_splitter import (
     CharacterTextSplitter,
 )
 
+document_charsplitter_chunksize = st.secrets["DOCUMENT_CHARSPLITTER_CHUNKSIZE"]
+document_charsplitter_chunk_overlap = st.secrets["DOCUMENT_CHARSPLITTER_CHUNK_OVERLAP"]
 
 load_dotenv()
 class DOCUMENTReader:
@@ -27,8 +30,8 @@ class DOCUMENTReader:
         # Initialize the text splitter
         text_splitter = CharacterTextSplitter(
             separator="\n",
-            chunk_size=int(os.getenv("DOCUMENT_CHARSPLITTER_CHUNKSIZE")),
-            chunk_overlap=int(os.getenv("DOCUMENT_CHARSPLITTER_CHUNK_OVERLAP")),
+            chunk_size=int(document_charsplitter_chunksize),
+            chunk_overlap=int(document_charsplitter_chunk_overlap),
         )
 
         # Load the pages from the document

@@ -4,10 +4,14 @@ from src.CustomGPTCache import CustomGPTCache
 import os
 from dotenv import load_dotenv
 from langchain.vectorstores.deeplake import DeepLake
+import streamlit as st
 from langchain_google_genai import (
     GoogleGenerativeAIEmbeddings, 
     ChatGoogleGenerativeAI
 )
+
+google_api_key = st.secrets["gemini_api_key"]
+cache_threshold = st.secrets["CACHE_THRESHOLD"]
 
 load_dotenv()
 class QAChain:
@@ -15,7 +19,7 @@ class QAChain:
         # Initialize Gemini Embeddings
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=os.getenv("GOOGLE_API_KEY"),
+            google_api_key=google_api_key,
             task_type="retrieval_query",
         )
 
@@ -24,7 +28,7 @@ class QAChain:
             # model="models/gemini-1.5-pro-latest",
             model= str(model_usage),
             temperature=0.3,
-            google_api_key=os.getenv("GOOGLE_API_KEY"),
+            google_api_key=google_api_key,
             convert_system_message_to_human=True,
         )
 
@@ -37,7 +41,7 @@ class QAChain:
         try:
             # Search for similar query response in cache
             cached_response = self.cache.find_similar_query_response(
-                query=query, threshold=int(os.getenv("CACHE_THRESHOLD"))
+                query=query, threshold=int(cache_threshold)
             )
 
             # If similar query response is present,vreturn it

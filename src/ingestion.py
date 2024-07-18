@@ -1,12 +1,14 @@
 import os
 from src.document_reader import DOCUMENTReader
 from langchain.vectorstores.deeplake import DeepLake
+import streamlit as st
 from langchain_google_genai import (
     GoogleGenerativeAIEmbeddings,
 )
 
 
-
+google_api_key = st.secrets["gemini_api_key"]
+cache_threshold = st.secrets["CACHE_THRESHOLD"]
 
 class Ingestion:
     """Ingestion class for ingesting documents to vectorstore."""
@@ -17,7 +19,7 @@ class Ingestion:
         self.text_retriever = None
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=os.getenv("GOOGLE_API_KEY"),
+            google_api_key=google_api_key,
         )
 
     def ingest_documents(

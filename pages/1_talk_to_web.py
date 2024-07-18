@@ -76,6 +76,7 @@ template = (
 Question: {query_str} \nContext: {context_str} \nAnswer:"""
 )
 
+
 llm_prompt = PromptTemplate(template)
 
 # App title
@@ -85,6 +86,8 @@ st.set_page_config(page_title="AIDSU Chatbot RAG👩‍🦰💬")
 with st.sidebar:
     st.title('AIDSU Chatbot RAG👩‍🦰💬')
     st.write('This chatbot is created using the Gemini API LLM model from Google.')
+    options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
+    selected_option = st.selectbox("Select Gemini Model:", options, index= 1)
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
@@ -134,6 +137,17 @@ def get_sources(metadata):
         text += url + "\n"
 
     return text
+
+def get_conversationchain(selected_option):
+    if selected_option == "gemini-1.5-pro-latest":
+        model_name = "models/gemini-1.5-pro-latest"
+    else:
+        model_name = "models/gemini-1.5-flash"
+
+    llm = Gemini(api_key=gemini_api_key, model_name=model_name)
+
+    # Set llm
+    Settings.llm = llm
 
 
 # User-provided prompt
