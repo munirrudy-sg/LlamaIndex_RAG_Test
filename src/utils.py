@@ -274,7 +274,8 @@ def preprocess_input(input_text):
         'magal': 'magal korean',
         'prosedur': 'cara',
         'ketentuan': 'syarat',
-        'ibu': 'bu'
+        'ibu': 'bu',
+        'mcd': 'mcdonald'
         # 'manajemen': 'komisaris dan direktur',
         # 'stakeholder': 'komisaris dan direktur',
         # 'di medan': 'di kota medan'
