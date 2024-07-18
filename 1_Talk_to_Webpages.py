@@ -19,7 +19,7 @@ from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
 import yaml
 
-from src.utils import preprocess_input
+from pages.src.utils import preprocess_input
 
 gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
@@ -87,7 +87,7 @@ with st.sidebar:
     st.title('AIDSU Chatbot RAG👩‍🦰💬')
     st.write('This chatbot is created using the Gemini API LLM model from Google.')
     options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
-    selected_option = st.selectbox("Select Gemini Model:", options, index= 1)
+    selected_option = st.selectbox("Select Gemini Model:", options, index= 0)
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
