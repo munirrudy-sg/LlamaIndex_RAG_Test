@@ -1,6 +1,6 @@
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from src.CustomGPTCache import CustomGPTCache
+from CustomGPTCache import CustomGPTCache
 import os
 from dotenv import load_dotenv
 from langchain.vectorstores.deeplake import DeepLake

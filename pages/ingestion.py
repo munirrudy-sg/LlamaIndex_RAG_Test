@@ -1,5 +1,5 @@
 import os
-from src.document_reader import DOCUMENTReader
+from document_reader import DOCUMENTReader
 from langchain.vectorstores.deeplake import DeepLake
 import streamlit as st
 from langchain_google_genai import (

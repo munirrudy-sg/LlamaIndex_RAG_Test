@@ -19,7 +19,7 @@ from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
 import yaml
 
-from pages.src.utils import preprocess_input
+from src.utils import preprocess_input
 
 gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
