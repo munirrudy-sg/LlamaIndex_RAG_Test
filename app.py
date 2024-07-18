@@ -18,6 +18,7 @@ from llama_index.vector_stores.chroma import ChromaVectorStore
 
 from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
+import yaml
 
 gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
@@ -26,11 +27,14 @@ model = Gemini(api_key=gemini_api_key, model_name="models/gemini-1.5-flash")
 # Set Global settings
 Settings.llm = model
 Settings.embed_model = gemini_embedding_model
-Settings.chunk_size = 3000
-Settings.chunk_overlap = 64
-Settings.context_window = 30000
+Settings.chunk_size = 3700
+Settings.chunk_overlap = 0
+Settings.context_window = 35000
 
-collection_name = "promosi-bsim-20240715"
+collection_name = "promosi-bsim-20240718"
+
+# Load the YAML data
+config = yaml.safe_load(open('config/config.yaml', 'r'))
 
 # Load from disk
 load_client = chromadb.PersistentClient(path="./chroma_db")
@@ -55,7 +59,7 @@ vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
 # Get the index from the vector store
 index = VectorStoreIndex.from_vector_store(
     vector_store,
-    similarity_top_k=5
+    similarity_top_k=7
 )
 
 template = (
@@ -103,10 +107,22 @@ def generate_gemini_response(prompt_input):
     # Step 7: Return the generated text
     return response.response, response.metadata
 
-# Example usage:
-# Assuming 'st.session_state.messages' is already populated with the required dialogue history.
-# result = generate_gemini_response("What is the current promotion for the credit card?")
-# print(result)
+def get_url_from_title(yaml_data, search_title):
+    for category, details in yaml_data.items():
+        for detail_page in details.get('detail_pages', []):
+            if detail_page['title'] == search_title:
+                return detail_page['url']
+    return ''
+        
+def get_sources(metadata):
+    # Extract the list of unique titles from metadata using a set
+    unique_titles = list({info['title'] for info in metadata.values()})
+    text = ''
+    for title in unique_titles:
+        url = get_url_from_title(config, title)
+        text += url + "\n"
+
+    return text
 
 
 # User-provided prompt
@@ -127,6 +143,9 @@ if st.session_state.messages[-1]["role"] != "assistant":
             for item in response:
                 full_response += item
                 placeholder.markdown(full_response)
+                
+            sources = get_sources(metadata)
+            full_response += "\n\n Sumber: \n\n" + sources
             placeholder.markdown(full_response) 
         with st.sidebar:
             st.write(f"\n Metadata: \n{metadata}")
