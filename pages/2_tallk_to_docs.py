@@ -3,10 +3,8 @@ import os
 import tempfile
 from pathlib import Path
 import shutil
-import sys
-sys.path.insert(0, '..')
-from src.ingestion import Ingestion
-from src.qachain import QAChain
+from ..src.ingestion import Ingestion
+from ..src.qachain import QAChain
 
 # extracting text from document
 def get_document_text(doc):
