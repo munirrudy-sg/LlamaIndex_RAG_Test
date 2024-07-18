@@ -70,7 +70,7 @@ def main():
 
                         # Write the uploaded file to a temporary file
                         with tempfile.NamedTemporaryFile(mode="wb", delete=False) as tmp_file:
-                            tmp_file.write(doc)
+                            tmp_file.write(doc.getvalue())
                             path = tmp_file.name
                         print("success")
                         #extract from document -> get the text chunk -> create vectore store
