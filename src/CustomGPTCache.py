@@ -11,7 +11,7 @@ class CustomGPTCache:
             model_name="all-MiniLM-L12-v2"
         )
         self.response_cache_store = DeepLake(
-            dataset_path="database/cache_vectorstore",
+            dataset_path="../database/cache_vectorstore",
             embedding=self.embeddings,
             read_only=False,
             num_workers=4,

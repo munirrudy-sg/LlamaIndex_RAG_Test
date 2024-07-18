@@ -32,7 +32,7 @@ class Ingestion:
         
         # Initialize the vector store
         vstore = DeepLake(
-            dataset_path="database/text_vectorstore",
+            dataset_path="../database/text_vectorstore",
             embedding=self.embeddings,
             overwrite=True,
             num_workers=4,
