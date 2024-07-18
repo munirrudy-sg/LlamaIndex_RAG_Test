@@ -62,14 +62,23 @@ def main():
             with st.spinner("Processing"):
                 if docs:
                     for doc in docs:
-                        temp_dir = tempfile.mkdtemp()
-                        path = os.path.join(temp_dir, doc.name)
-                        print(path)
-                        with open(path, "wb") as f:
-                            f.write(doc.getvalue())
+                        # temp_dir = tempfile.mkdtemp()
+                        DATA_PATH = "../../docs"
+                        if not os.path.exists(DATA_PATH):
+                            os.makedirs(DATA_PATH)
+                        file_path = str(DATA_PATH / doc.name)
+                        doc.seek(0)
+                        file_bytes = doc.read()
+                        file = open(file_path, "wb")
+                        file.write(file_bytes)
+                        file.close()
+                        # path = os.path.join("docs", doc.name)
+                        print(file_path)
+                        # with open(file_path, "wb") as f:
+                        #     f.write(doc.getvalue())
                         print("success")
                         #extract from document -> get the text chunk -> create vectore store
-                        get_document_text(path)
+                        get_document_text(file_path)
                     st.success("Done")
         
     # Main content area for displaying chat messages
