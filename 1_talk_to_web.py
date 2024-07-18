@@ -20,9 +20,7 @@ from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
 import yaml
 import os
-print(os.getcwd())
-sys.path.insert(0, '..')
-print(os.getcwd())
+
 from src.utils import preprocess_input
 
 gemini_api_key = st.secrets["gemini_api_key"]
