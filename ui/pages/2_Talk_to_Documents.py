@@ -67,6 +67,7 @@ def main():
                         print(path)
                         with open(path, "wb") as f:
                             f.write(doc.getvalue())
+                        print("success")
                         #extract from document -> get the text chunk -> create vectore store
                         get_document_text(path)
                     st.success("Done")
