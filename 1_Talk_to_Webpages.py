@@ -19,7 +19,7 @@ from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
 import yaml
-import os
+
 
 from src.utils import preprocess_input
 
