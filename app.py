@@ -19,6 +19,7 @@ from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
 import yaml
+from src.utils import preprocess_input
 
 gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
@@ -145,7 +146,7 @@ if prompt := st.chat_input():
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            llm_response = generate_gemini_response(prompt)
+            llm_response = generate_gemini_response(preprocess_input(prompt))
             response = llm_response[0]
             metadata = llm_response[1]
             placeholder = st.empty()
