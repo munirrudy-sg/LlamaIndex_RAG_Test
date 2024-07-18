@@ -18,7 +18,7 @@ langsmith==0.0.87
 lxml==4.9.4
 nltk==3.8.1
 numpy==1.26.2
-openai==0.28.0
+openai
 pydantic==2.5.3
 pydantic_core==2.14.6
 PyMuPDF==1.23.21
