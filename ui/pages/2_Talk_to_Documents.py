@@ -62,11 +62,16 @@ def main():
             with st.spinner("Processing"):
                 if docs:
                     for doc in docs:
-                        temp_dir = tempfile.mkdtemp()
-                        path = os.path.join(temp_dir, doc.name)
-                        print(path)
-                        with open(path, "wb") as f:
-                            f.write(doc.getvalue())
+                        # temp_dir = tempfile.mkdtemp()
+                        # path = os.path.join(temp_dir, doc.name)
+                        # print(path)
+                        # with open(path, "wb") as f:
+                        #     f.write(doc.getvalue())
+
+                        # Write the uploaded file to a temporary file
+                        with tempfile.NamedTemporaryFile(mode="wb", delete=False) as tmp_file:
+                            tmp_file.write(doc)
+                            path = tmp_file.name
                         print("success")
                         #extract from document -> get the text chunk -> create vectore store
                         get_document_text(path)
