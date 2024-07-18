@@ -61,7 +61,7 @@ class QAChain:
     def generate_response(self, query: str):
         # Initialize the vectorstore and retriever object
         vstore = DeepLake(
-            dataset_path="database/text_vectorstore",
+            dataset_path="../../database/text_vectorstore",
             embedding=self.embeddings,
             read_only=True,
             num_workers=4,
