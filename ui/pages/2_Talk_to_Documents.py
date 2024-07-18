@@ -3,7 +3,7 @@ import os
 import tempfile
 from pathlib import Path
 import shutil
-from ingestion import Ingestion
+from src.ingestion import Ingestion
 from src.qachain import QAChain
 
 # extracting text from document
