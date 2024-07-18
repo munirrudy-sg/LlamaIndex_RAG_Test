@@ -28,7 +28,7 @@ class Ingestion:
     ):
         
         loader = DOCUMENTReader()
-        chunks = loader.load_document(file_path="pages" + file)
+        chunks = loader.load_document(file_path="../pages" + file)
         
         # Initialize the vector store
         vstore = DeepLake(
