@@ -109,14 +109,24 @@ def generate_gemini_response(prompt_input):
 
 def get_url_from_title(yaml_data, search_title):
     for category, details in yaml_data.items():
-        for detail_page in details.get('detail_pages', []):
+        for detail_page in details['detail_pages']:
             if detail_page['title'] == search_title:
                 return detail_page['url']
     return ''
         
+def unique_preserve_order(input_list):
+    seen = set()
+    unique_list = []
+    for item in input_list:
+        if item not in seen:
+            seen.add(item)
+            unique_list.append(item)
+    return unique_list
+
 def get_sources(metadata):
     # Extract the list of unique titles from metadata using a set
-    unique_titles = list({info['title'] for info in metadata.values()})
+    titles = [info['title'] for info in metadata.values()]
+    unique_titles = unique_preserve_order(titles)
     text = ''
     for title in unique_titles:
         url = get_url_from_title(config, title)
@@ -143,7 +153,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             for item in response:
                 full_response += item
                 placeholder.markdown(full_response)
-                
+
             sources = get_sources(metadata)
             full_response += "\n\n Sumber: \n\n" + sources
             placeholder.markdown(full_response) 
