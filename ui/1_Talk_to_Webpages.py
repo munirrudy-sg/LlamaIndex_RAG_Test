@@ -21,9 +21,12 @@ import yaml
 
 from src.utils import preprocess_input
 
+generation_config = {"temperature": 0.25}
+
 gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
-model = Gemini(api_key=gemini_api_key, model_name="models/gemini-1.5-flash")
+
+model = Gemini(api_key=gemini_api_key, model_name="models/gemini-1.5-flash", generation_config=generation_config)
 
 # Set Global settings
 Settings.llm = model
@@ -72,7 +75,9 @@ template = (
             There are two types of credit card in Bank Sinarmas 'personal' and 'korporat'.
             If the promo only contain one type of credit card, then the other is not eligible.
             Data or context is provided from Bank Sinarmas website.
-            website bank sinarmas 'https://www.banksinarmas.com/id/'
+            Bank sinarmas website: https://www.banksinarmas.com/id/.
+            Call center: 1500153.
+            
 Question: {query_str} \nContext: {context_str} \nAnswer:"""
 )
 
