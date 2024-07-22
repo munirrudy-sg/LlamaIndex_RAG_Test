@@ -1,16 +1,15 @@
 import os
 from src.document_reader import DOCUMENTReader
-from langchain.vectorstores.deeplake import DeepLake
 import streamlit as st
+from langchain_community.vectorstores import FAISS
 from langchain_google_genai import (
     GoogleGenerativeAIEmbeddings,
 )
 
+gemini_api_key = st.secrets["gemini_api_key"]
 
-google_api_key = st.secrets["gemini_api_key"]
-cache_threshold = st.secrets["CACHE_THRESHOLD"]
 
-class Ingestion:
+class Prep:
     """Ingestion class for ingesting documents to vectorstore."""
 
     def __init__(self):
@@ -19,7 +18,7 @@ class Ingestion:
         self.text_retriever = None
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=google_api_key,
+            google_api_key=gemini_api_key,
         )
 
     def ingest_documents(
@@ -31,13 +30,5 @@ class Ingestion:
         chunks = loader.load_document(file_path=file)
         
         # Initialize the vector store
-        vstore = DeepLake(
-            dataset_path="../../database/text_vectorstore",
-            embedding=self.embeddings,
-            overwrite=True,
-            num_workers=4,
-            verbose=False,
-        )
-        
-        # Ingest the chunks
-        _ = vstore.add_documents(chunks)
+        vector_store = FAISS.from_documents(chunks, embedding=self.embeddings)
+        return vector_store

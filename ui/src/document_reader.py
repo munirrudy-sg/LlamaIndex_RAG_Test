@@ -1,8 +1,9 @@
 import os
-from langchain.schema import Document
-from dotenv import load_dotenv
-from langchain_community.document_loaders import Docx2txtLoader, PyPDFLoader
 import streamlit as st
+from langchain.schema import Document
+# from dotenv import load_dotenv
+from langchain.document_loaders.pdf import PyPDFLoader
+from langchain_community.document_loaders import Docx2txtLoader
 from langchain.text_splitter import (
     CharacterTextSplitter,
 )
@@ -10,13 +11,13 @@ from langchain.text_splitter import (
 document_charsplitter_chunksize = st.secrets["DOCUMENT_CHARSPLITTER_CHUNKSIZE"]
 document_charsplitter_chunk_overlap = st.secrets["DOCUMENT_CHARSPLITTER_CHUNK_OVERLAP"]
 
-load_dotenv()
+# load_dotenv()
 class DOCUMENTReader:
 
     def __init__(self) -> None:
         self.file_name = ""
         self.total_pages = 0
-
+        
     def load_document(self, file_path):
         # Get the filename from file path
         self.file_name = os.path.basename(file_path)

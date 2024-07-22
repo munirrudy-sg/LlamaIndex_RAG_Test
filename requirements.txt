@@ -1,10 +1,10 @@
 # talk to docs
-deeplake==3.8.19
-docx2txt==0.8
 langchain
 langchain-community
 langchain-core
 langchain-google-genai
+langchain-together
+langdetect
 langsmith
 lxml==4.9.4
 nltk==3.8.1
@@ -18,7 +18,8 @@ pypdfium2==4.25.0
 scipy==1.12.0
 sentence-transformers==2.3.1
 tiktoken==0.5.2
-transformers==4.36.2
+transformers
+faiss-cpu
 
 # talk to web
 chromadb==0.5.3

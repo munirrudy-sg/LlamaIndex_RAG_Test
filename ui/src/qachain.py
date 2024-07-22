@@ -1,25 +1,24 @@
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from src.CustomGPTCache import CustomGPTCache
+import streamlit as st
+# from src.CustomGPTCache import CustomGPTCache
 import os
 from dotenv import load_dotenv
 from langchain.vectorstores.deeplake import DeepLake
-import streamlit as st
 from langchain_google_genai import (
     GoogleGenerativeAIEmbeddings, 
     ChatGoogleGenerativeAI
 )
-
-google_api_key = st.secrets["gemini_api_key"]
+gemini_api_key = st.secrets["gemini_api_key"]
 cache_threshold = st.secrets["CACHE_THRESHOLD"]
 
-load_dotenv()
+# load_dotenv()
 class QAChain:
-    def __init__(self, model_usage) -> None:
+    def __init__(self, model_usage,vector) -> None:
         # Initialize Gemini Embeddings
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=google_api_key,
+            google_api_key=gemini_api_key,
             task_type="retrieval_query",
         )
 
@@ -28,12 +27,12 @@ class QAChain:
             # model="models/gemini-1.5-pro-latest",
             model= str(model_usage),
             temperature=0.3,
-            google_api_key=google_api_key,
+            google_api_key=gemini_api_key,
             convert_system_message_to_human=True,
         )
-
+        self.vector = vector
         # Initialize GPT Cache
-        self.cache = CustomGPTCache()
+        # self.cache = CustomGPTCache()
         self.text_vectorstore = None
         self.text_retriever = None
 
@@ -60,13 +59,7 @@ class QAChain:
 
     def generate_response(self, query: str):
         # Initialize the vectorstore and retriever object
-        vstore = DeepLake(
-            dataset_path="../../database/text_vectorstore",
-            embedding=self.embeddings,
-            read_only=True,
-            num_workers=4,
-            verbose=False,
-        )
+        vstore = self.vector
         retriever = vstore.as_retriever(search_type="similarity")
         retriever.search_kwargs["distance_metric"] = "cos"
         retriever.search_kwargs["fetch_k"] = 20
@@ -100,6 +93,6 @@ class QAChain:
         # Run the QA chain and store the response in cache
         result = qa({"query": query})["result"]
         # QA_query =  qa({"query": query})
-        self.cache.cache_query_response(query=query, response=result)
+        # self.cache.cache_query_response(query=query, response=result)
         
         return result
