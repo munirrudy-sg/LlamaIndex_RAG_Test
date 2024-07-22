@@ -2,8 +2,8 @@ import os
 import streamlit as st
 from langchain.schema import Document
 # from dotenv import load_dotenv
-from langchain.document_loaders.pdf import PyPDFLoader
-from langchain_community.document_loaders import Docx2txtLoader
+# from langchain.document_loaders.pdf import PyPDFLoader
+from langchain_community.document_loaders import Docx2txtLoader, PyPDFLoader
 from langchain.text_splitter import (
     CharacterTextSplitter,
 )
