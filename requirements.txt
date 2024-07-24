@@ -20,6 +20,7 @@ sentence-transformers==2.3.1
 tiktoken==0.5.2
 transformers
 faiss-cpu
+llama-parse
 
 # talk to web
 chromadb==0.5.3

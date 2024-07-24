@@ -5,6 +5,9 @@ from src.qachain import QAChain
 import tempfile
 from pathlib import Path
 import shutil
+import nest_asyncio
+
+nest_asyncio.apply()
 # extracting text from document
 
 # @st.cache_resource(show_spinner=False)
