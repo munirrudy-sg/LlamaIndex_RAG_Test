@@ -84,7 +84,7 @@ class QAChain:
         )
         document_prompt = PromptTemplate(
             input_variables=["page_content","file_name", "page_no"],
-            template="Context:\npage content{page_content},\nfile name :{file_name}\n page number:{page_no}",
+            template="Context:\npage content{page_content},\nfile name :{file_name} \npage number:{page_no}",
         )
         
         lc = LLMChain(llm=self.model, prompt=PROMPT)
@@ -115,7 +115,7 @@ class QAChain:
         searchDocs = vstore.similarity_search(result['result'])
         metadata = [j.metadata for j in searchDocs][0]
         answer_with_source =  f"""{answer}\n\n
-Sumber File : {metadata['file_name']} \nHalaman : {metadata['page_no']} """
+Sumber File : {metadata['file_name']} \n\nHalaman : {metadata['page_no']} """
         # self.cache.cache_query_response(query=query, response=result)
         
         return answer_with_source
