@@ -16,7 +16,7 @@ dir = path.Path(__file__).abspath()
 sys.path.append(dir.parent.parent)
 
 # load model
-path_to_query = './examples.json'
+path_to_query = '../examples.json'
 
 
 
