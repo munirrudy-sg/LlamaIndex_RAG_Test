@@ -29,7 +29,7 @@ from langchain.agents import create_tool_calling_agent
 from langchain.agents.agent import AgentExecutor
 import streamlit as st
 
-gemini_api_key = st.secrets["gemini_api_key"]
+db_gemini_api_key = st.secrets["db_gemini_api_key"]
 mysql_uri = st.secrets["MYSQL_URI"]
 
 
@@ -39,7 +39,7 @@ class SQLAgent:
         # Initialize Gemini Embeddings
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=gemini_api_key
+            google_api_key=db_gemini_api_key
         )
 
         # Initialize Gemini Chat model
@@ -47,7 +47,7 @@ class SQLAgent:
             # model="models/gemini-1.5-pro-latest",
             model= str(model_usage),
             temperature=0,
-            google_api_key=gemini_api_key,
+            google_api_key=db_gemini_api_key,
             max_tokens=None,
             timeout=None,
             max_retries=2

@@ -11,7 +11,7 @@ from langchain_google_genai import (
 from langchain_core.example_selectors import SemanticSimilarityExampleSelector
 
 
-gemini_api_key = st.secrets["gemini_api_key"]
+db_gemini_api_key = st.secrets["db_gemini_api_key"]
 
 # dir = path.Path(__file__).abspath()
 # sys.path.append(dir.parent.parent)
@@ -27,7 +27,7 @@ class Prep:
         self.text_retriever = None
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=gemini_api_key,
+            google_api_key=db_gemini_api_key,
         )
 
     def get_query_examples(
