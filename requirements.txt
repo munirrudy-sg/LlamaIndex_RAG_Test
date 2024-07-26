@@ -30,3 +30,6 @@ llama-index-llms-gemini
 llama-index-embeddings-gemini
 llama-index-vector-stores-chroma==0.1.10
 pysqlite3-binary
+
+# talk to db
+langchain-experimental

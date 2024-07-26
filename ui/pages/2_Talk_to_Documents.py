@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from src.data_prep import Prep
+from src.talk_to_doc_data_prep import Prep
 from src.qachain import QAChain
 import tempfile
 from pathlib import Path
@@ -54,6 +54,9 @@ def main():
     st.title("Chat with document files using Gemini🤖")
     st.subheader("Your documents")
     st.write("Welcome to the chat!")
+
+    # Clear chat everytime pages move
+    clear_chat_history()
 
     if "vector_store" not in st.session_state:
         st.session_state.vector_store = None

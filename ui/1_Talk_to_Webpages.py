@@ -26,10 +26,8 @@ generation_config = {"temperature": 0.25}
 gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
 
-model = Gemini(api_key=gemini_api_key, model_name="models/gemini-1.5-flash", generation_config=generation_config)
-
 # Set Global settings
-Settings.llm = model
+# Settings.llm = model
 Settings.embed_model = gemini_embedding_model
 Settings.chunk_size = 3700
 Settings.chunk_overlap = 0
@@ -84,32 +82,20 @@ Question: {query_str} \nContext: {context_str} \nAnswer:"""
 
 llm_prompt = PromptTemplate(template)
 
-# App title
-st.set_page_config(page_title="AIDSU Chatbot RAG👩‍🦰💬")
-
-# Replicate Credentials
-with st.sidebar:
-    st.title('AIDSU Chatbot RAG👩‍🦰💬')
-    st.write('This chatbot is created using the Gemini API LLM model from Google.')
-    options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
-    selected_option = st.selectbox("Select Gemini Model:", options, index= 0)
-
-# Store LLM generated responses
-if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-
-# Display or clear chat messages
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.write(message["content"])
-
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
+    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
-def generate_gemini_response(prompt_input):
+def generate_gemini_response(prompt_input, selected_option):
 
-    query_engine = index.as_query_engine(text_qa_template=llm_prompt, similarity_top_k=7, response_mode="simple_summarize")
+    if selected_option == "gemini-1.5-pro-latest":
+        model_name = "models/gemini-1.5-pro-latest"
+    else:
+        model_name = "models/gemini-1.5-flash"
+
+    llm = Gemini(api_key=gemini_api_key, model_name=model_name, generation_config=generation_config)
+
+    query_engine = index.as_query_engine(text_qa_template=llm_prompt, similarity_top_k=7, llm=llm, response_mode="simple_summarize")
 
     response = query_engine.query(prompt_input)
 
@@ -143,41 +129,58 @@ def get_sources(metadata):
 
     return text
 
-def get_conversationchain(selected_option):
-    if selected_option == "gemini-1.5-pro-latest":
-        model_name = "models/gemini-1.5-pro-latest"
-    else:
-        model_name = "models/gemini-1.5-flash"
 
-    llm = Gemini(api_key=gemini_api_key, model_name=model_name)
+def main():
+    # App title
+    st.set_page_config(page_title="AIDSU Chatbot RAG👩‍🦰💬")
+    st.title('AIDSU Chatbot Promotion RAG using Gemini!👩‍🦰💬')
+    st.write("Welcome to the chat!")
 
-    # Set llm
-    Settings.llm = llm
+    # Clear chat everytime pages move
+    clear_chat_history()
+    
+    with st.sidebar:
+        options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
+        selected_option = st.selectbox("Select Gemini Model:", options, index= 0)
 
+    # Main content area for displaying chat messages
+    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
-# User-provided prompt
-if prompt := st.chat_input():
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.write(prompt)
+    # Store LLM generated responses
+    if "messages" not in st.session_state.keys():
+        st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
 
-# Generate a new response if last message is not from assistant
-if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            llm_response = generate_gemini_response(preprocess_input(prompt))
-            response = llm_response[0]
-            metadata = llm_response[1]
-            placeholder = st.empty()
-            full_response = ''
-            for item in response:
-                full_response += item
-                placeholder.markdown(full_response)
+    # Display or clear chat messages
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
 
-            sources = get_sources(metadata)
-            full_response += "\n\n Sumber: \n\n" + sources
-            placeholder.markdown(full_response) 
-        with st.sidebar:
-            st.write(f"\n Metadata: \n{metadata}")
-    message = {"role": "assistant", "content": full_response}
-    st.session_state.messages.append(message)
+    # User-provided prompt
+    if prompt := st.chat_input():
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.write(prompt)
+
+    # Generate a new response if last message is not from assistant
+    if st.session_state.messages[-1]["role"] != "assistant":
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                llm_response = generate_gemini_response(preprocess_input(prompt), selected_option)
+                response = llm_response[0]
+                metadata = llm_response[1]
+                placeholder = st.empty()
+                full_response = ''
+                for item in response:
+                    full_response += item
+                    placeholder.markdown(full_response)
+
+                sources = get_sources(metadata)
+                full_response += "\n\n Sumber: \n\n" + sources
+                placeholder.markdown(full_response) 
+            with st.sidebar:
+                st.write(f"\n Metadata: \n{metadata}")
+        message = {"role": "assistant", "content": full_response}
+        st.session_state.messages.append(message)
+
+if __name__ == '__main__':
+    main()
