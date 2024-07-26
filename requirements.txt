@@ -32,10 +32,11 @@ llama-index-vector-stores-chroma==0.1.10
 pysqlite3-binary
 
 # talk to db
-langchain-experimental
 path
-mypy-extensions==1.0.0
-mysql==0.0.3
-mysql-connector-python==9.0.0
-mysqlclient==2.2.4
-SQLAlchemy==1.4.52
+mypy-extensions
+mysql
+mysql-connector-python
+mysqlclient
+SQLAlchemy
+pymysql
+langchain-experimental
