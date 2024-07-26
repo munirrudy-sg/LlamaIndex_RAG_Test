@@ -1,6 +1,4 @@
-import json
-
-json_data = [
+query = [
     {"input": "daftar customer/nasabah vip", 
      "query": "SELECT * FROM cc_trx WHERE `Revw Desc`='VIP';"
     },
@@ -242,6 +240,3 @@ json_data = [
         "query": "SELECT COUNT(*) FROM cc_trx WHERE `Tier Limit` = '8. > 100 Jt' AND YEAR(`Report Date`) = '2024'"
     }
 ]
-
-# Open and read the JSON file
-query = json.load(json_data)
