@@ -108,7 +108,7 @@ class SQLAgent:
             agent=agent,
             tools=tools,
             verbose=True,
-            max_iteration=20
+            max_iterations=20
             # callbacks=[await asyncio.sleep(5)]
         )
 
