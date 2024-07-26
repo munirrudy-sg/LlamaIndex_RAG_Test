@@ -34,3 +34,6 @@ pysqlite3-binary
 # talk to db
 langchain-experimental
 path
+mysql
+mysql-connector-python
+mysqlclient
