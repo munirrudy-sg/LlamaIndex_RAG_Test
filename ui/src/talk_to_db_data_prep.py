@@ -42,7 +42,7 @@ class Prep:
             query,
             self.embeddings,
             FAISS,
-            k=10,
+            k=5,
             input_keys=["input"],
         )
 
