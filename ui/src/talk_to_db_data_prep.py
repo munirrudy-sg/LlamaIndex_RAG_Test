@@ -4,6 +4,7 @@ import streamlit as st
 import sys
 import path
 from langchain_community.vectorstores import FAISS
+from examples import query
 from langchain_google_genai import (
     GoogleGenerativeAIEmbeddings,
 )
@@ -14,9 +15,6 @@ gemini_api_key = st.secrets["gemini_api_key"]
 
 dir = path.Path(__file__).abspath()
 sys.path.append(dir.parent.parent)
-
-# load model
-path_to_query = './examples.json'
 
 
 
@@ -36,12 +34,12 @@ class Prep:
         self
     ):
 
-        # Open and read the JSON file
-        with open(path_to_query, 'r') as json_file:
-            examples = json.load(json_file)
+        # # Open and read the JSON file
+        # with open(path_to_query, 'r') as json_file:
+        #     examples = json.load(json_file)
 
         example_selector = SemanticSimilarityExampleSelector.from_examples(
-            examples,
+            query,
             self.embeddings,
             FAISS,
             k=10,
