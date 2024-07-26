@@ -22,6 +22,7 @@ class Prep:
     """Ingestion class for ingesting documents to vectorstore."""
 
     def __init__(self):
+        self.query = query
         self.text_vectorstore = None
         self.image_vectorstore = None
         self.text_retriever = None
@@ -39,7 +40,7 @@ class Prep:
         #     examples = json.load(json_file)
 
         example_selector = SemanticSimilarityExampleSelector.from_examples(
-            query,
+            self.query,
             self.embeddings,
             FAISS,
             k=5,
