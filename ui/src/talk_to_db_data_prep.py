@@ -13,8 +13,8 @@ from langchain_core.example_selectors import SemanticSimilarityExampleSelector
 
 gemini_api_key = st.secrets["gemini_api_key"]
 
-dir = path.Path(__file__).abspath()
-sys.path.append(dir.parent.parent)
+# dir = path.Path(__file__).abspath()
+# sys.path.append(dir.parent.parent)
 
 
 
