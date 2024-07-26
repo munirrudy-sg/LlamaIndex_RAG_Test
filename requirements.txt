@@ -40,3 +40,4 @@ mysqlclient
 SQLAlchemy
 pymysql
 langchain-experimental
+langchain-text-splitters
