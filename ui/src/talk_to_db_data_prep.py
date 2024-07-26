@@ -4,7 +4,7 @@ import streamlit as st
 import sys
 import path
 from langchain_community.vectorstores import FAISS
-from examples import query
+from src.examples import query
 from langchain_google_genai import (
     GoogleGenerativeAIEmbeddings,
 )
