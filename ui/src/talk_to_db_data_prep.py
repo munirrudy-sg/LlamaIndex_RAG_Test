@@ -28,7 +28,7 @@ class Prep:
     ):
         
         # Define the path to the JSON file
-        file_path = 'src/examples.json'
+        file_path = 'examples.json'
 
         # Open and read the JSON file
         with open(file_path, 'r') as json_file:
