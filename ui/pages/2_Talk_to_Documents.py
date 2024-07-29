@@ -56,7 +56,7 @@ def main():
     st.write("Welcome to the chat!")
 
     # Clear chat everytime pages move
-    clear_chat_history()
+    # clear_chat_history()
 
     if "vector_store" not in st.session_state:
         st.session_state.vector_store = None

@@ -136,7 +136,7 @@ def main():
     st.write("Welcome to the chat!")
 
     # Clear chat everytime pages move
-    clear_chat_history()
+    # clear_chat_history()
     
     with st.sidebar:
         options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
