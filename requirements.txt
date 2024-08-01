@@ -30,14 +30,17 @@ llama-index-llms-gemini
 llama-index-embeddings-gemini
 llama-index-vector-stores-chroma==0.1.10
 pysqlite3-binary
+llama-index-vector-stores-milvus
+FlagEmbedding
+pymilvus>=2.4.2
 
 # talk to db
-path
-mypy-extensions
-mysql
-mysql-connector-python
-mysqlclient
-SQLAlchemy
-pymysql
-langchain-experimental
-langchain-text-splitters
+# path
+# mypy-extensions
+# mysql
+# mysql-connector-python
+# mysqlclient
+# SQLAlchemy
+# pymysql
+# langchain-experimental
+# langchain-text-splitters

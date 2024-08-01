@@ -14,6 +14,7 @@ from llama_index.core import VectorStoreIndex
 from llama_index.core import PromptTemplate
 
 from llama_index.vector_stores.chroma import ChromaVectorStore
+from llama_index.vector_stores.milvus import MilvusVectorStore
 
 from llama_index.embeddings.gemini import GeminiEmbedding
 from llama_index.llms.gemini import Gemini
@@ -29,53 +30,67 @@ gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="mod
 # Set Global settings
 # Settings.llm = model
 Settings.embed_model = gemini_embedding_model
-Settings.chunk_size = 3700
-Settings.chunk_overlap = 0
-Settings.context_window = 35000
+Settings.context_window = 50000
 
-collection_name = "promosi-bsim-20240718"
+### For Chroma
+# collection_name = "promosi-bsim-20240718"
 
 # Load the YAML data
 config = yaml.safe_load(open('config/config.yaml', 'r'))
 
-# Load from disk
-load_client = chromadb.PersistentClient(path="./chroma_db")
+# # Load from disk
+# load_client = chromadb.PersistentClient(path="./chroma_db")
 
-# Fetch the collection
-chroma_collection = load_client.get_collection(collection_name)
+# # Fetch the collection
+# chroma_collection = load_client.get_collection(collection_name)
 
 # configuration = {
 #     "client_type": "PersistentClient",
 #     "path": "./chroma_db"
 # }
+## Fetch the vector store
+# vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
 
+# # Get the index from the vector store
+# index = VectorStoreIndex.from_vector_store(
+#     vector_store,
+#     similarity_top_k=7
+# )
 
-
-# conn = st.experimental_connection("chromadb",
-#                                 type=ChromaDBConnection,
-#                                 **configuration)
-
-# Fetch the vector store
-vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
-
-# Get the index from the vector store
-index = VectorStoreIndex.from_vector_store(
-    vector_store,
-    similarity_top_k=7
+## For Milvus
+vector_store = MilvusVectorStore(
+    uri="./milvus_db/milvus_vdb_bsim_20240801.db",
+    dim=768,
+    overwrite=False,
+    enable_sparse=True,
+    hybrid_ranker="RRFRanker",
+    hybrid_ranker_params={"k": 100},
 )
+index = VectorStoreIndex.from_vector_store(vector_store)
 
-template = (
-    """You are a helpful assistant of Bank Sinarmas, answer in 'Bahasa Indonesia'.
-    You do not respond as 'User' or pretend to be 'User'. 
-    The question is from user that want to know mostly about promotion in Bank Sinarmas
-    Check all of provided context, the context is in bahasa indonesia
-    Notes: 'list outlet' is the restaurant/place/city in indonesia where promo is eligible, 
-            There are two types of credit card in Bank Sinarmas 'personal' and 'korporat'.
-            If the promo only contain one type of credit card, then the other is not eligible.
-            Data or context is provided from Bank Sinarmas website.
-            Bank sinarmas website: https://www.banksinarmas.com/id/.
-            Call center: 1500153.
-            
+template = ("""You are a knowledgeable and friendly virtual assistant for Bank Sinarmas, aiming to provide exceptional customer service.
+    Leverage the provided context to tailor your responses accurately and provide relevant information.
+    Strive to understand the user's underlying needs and goals to provide the most helpful response.
+    Use clear, concise, and polite indonesian language in your responses. Avoid jargon and technical terms.
+    If you encounter an ambiguous query or lack sufficient information, politely ask for clarification.
+    The context were about bank sinarmas profile, management/stakeholder, product and promotion.
+
+    **Key points to remember:**
+    * Prioritize customer satisfaction.
+    * Offer additional assistance or information when possible.
+    * Use a conversational and engaging tone.
+    * Maintain a professional demeanor.
+
+
+    **Additional Considerations**
+    *'list outlet' is the restaurant/place/city in indonesia where the promo is eligible,
+    *There are two types of credit card in Bank Sinarmas 'personal' and 'korporat'.
+    *If the promo only contain one type of credit card, then the other is not eligible.
+    *Bancassurance is similar with 'asuransi'.
+    *Data or context is provided from Bank Sinarmas website.
+    *Bank Sinarmas website: https://www.banksinarmas.com/id/.
+    *Bank Sinarmas call center: 1500153.
+
 Question: {query_str} \nContext: {context_str} \nAnswer:"""
 )
 
@@ -94,7 +109,7 @@ def generate_gemini_response(prompt_input, selected_option):
 
     llm = Gemini(api_key=gemini_api_key, model_name=model_name, generation_config=generation_config)
 
-    query_engine = index.as_query_engine(text_qa_template=llm_prompt, similarity_top_k=7, llm=llm, response_mode="simple_summarize")
+    query_engine = index.as_query_engine(text_qa_template=llm_prompt, similarity_top_k=10, llm=llm, response_mode="simple_summarize", vector_store_query_mode="hybrid")
 
     response = query_engine.query(prompt_input)
 
@@ -121,6 +136,7 @@ def get_sources(metadata):
     # Extract the list of unique titles from metadata using a set
     titles = [info['title'] for info in metadata.values()]
     unique_titles = unique_preserve_order(titles)
+    unique_titles = unique_titles[:5]
     text = ''
     for title in unique_titles:
         url = get_url_from_title(config, title)
