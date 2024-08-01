@@ -94,11 +94,11 @@ template = ("""You are a knowledgeable and friendly virtual assistant for Bank S
 Question: {query_str} \nContext: {context_str} \nAnswer:"""
 )
 
-
 llm_prompt = PromptTemplate(template)
+opening_content = """Selamat pagi/siang/sore/malam! 👋  \nApa yang ingin Anda tanyakan tentang Bank Sinarmas?  \nKami siap membantu Anda dengan informasi mengenai:  \n1. Profil Bank Sinarmas.  \n2. Manajemen Bank Sinarmas.  \n3. Promo yang tersedia.  \n4. Produk-produk Bank Sinarmas."""
 
 def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+    st.session_state.messages = [{"role": "assistant", "content": f"{opening_content}"}]
 
 def generate_gemini_response(prompt_input, selected_option):
 
@@ -140,7 +140,7 @@ def get_sources(metadata):
     text = ''
     for title in unique_titles:
         url = get_url_from_title(config, title)
-        text += url + "\n"
+        text += url + "  \n"
 
     return text
 
@@ -157,13 +157,24 @@ def main():
     with st.sidebar:
         options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
         selected_option = st.selectbox("Select Gemini Model:", options, index= 0)
+        st.write("""Elisa bisa bantu kamu mengetahui informasi promo dan layanan berikut:  \n
+    1. Info Promosi  \n
+    2. Info Produk Tabungan  \n
+    3. Info Produk Deposito  \n
+    4. dll  \n\n
+    Contoh pertanyaan:  \n
+    1. Promo apa saja yang tersedia?  \n
+    2. Bagaimana cara membuat cc korporat?  \n
+    3. List promo yang tersedia di medan!  \n
+    4. Apakah promo magal bisa pakai cc korporat?""" 
+)
+        # Main content area for displaying chat messages
+        st.button('Clear Chat History', on_click=clear_chat_history)
 
-    # Main content area for displaying chat messages
-    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
     # Store LLM generated responses
     if "messages" not in st.session_state.keys():
-        st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+        st.session_state.messages = [{"role": "assistant", "content": f"{opening_content}"}]
 
     # Display or clear chat messages
     for message in st.session_state.messages:
@@ -190,12 +201,12 @@ def main():
                     placeholder.markdown(full_response)
 
                 sources = get_sources(metadata)
-                full_response += "\n\n Sumber: \n\n" + sources
+                full_response += "\n\n Sumber:  \n" + sources
                 placeholder.markdown(full_response) 
-            with st.sidebar:
-                st.write(f"\n Metadata: \n{metadata}")
-        message = {"role": "assistant", "content": full_response}
-        st.session_state.messages.append(message)
+            # with st.sidebar:
+            #     st.write(f"\n Metadata: \n{metadata}")
+        # message = {"role": "assistant", "content": full_response}
+        # st.session_state.messages.append(message)
 
 if __name__ == '__main__':
     main()
