@@ -157,16 +157,7 @@ def main():
     with st.sidebar:
         options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
         selected_option = st.selectbox("Select Gemini Model:", options, index= 0)
-        st.write("""Elisa bisa bantu kamu mengetahui informasi promo dan layanan berikut:  \n
-    1. Info Promosi  \n
-    2. Info Produk Tabungan  \n
-    3. Info Produk Deposito  \n
-    4. dll  \n\n
-    Contoh pertanyaan:  \n
-    1. Promo apa saja yang tersedia?  \n
-    2. Bagaimana cara membuat cc korporat?  \n
-    3. List promo yang tersedia di medan!  \n
-    4. Apakah promo magal bisa pakai cc korporat?""" 
+        st.write("""Elisa bisa bantu kamu mengetahui informasi promo dan layanan berikut:  \n1. Info Promosi  \n2. Info Produk Tabungan  \n3. Info Produk Deposito  \n4. dll  \n\nContoh pertanyaan:  \n1. Promo apa saja yang tersedia?  \n2. Bagaimana cara membuat cc korporat?  \n3. List promo yang tersedia di medan!  \n4. Apakah promo magal bisa pakai cc korporat?""" 
 )
         # Main content area for displaying chat messages
         st.button('Clear Chat History', on_click=clear_chat_history)
