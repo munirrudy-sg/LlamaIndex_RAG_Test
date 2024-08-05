@@ -275,7 +275,10 @@ def preprocess_input(input_text):
         'prosedur': 'cara',
         'ketentuan': 'syarat',
         'ibu': 'bu',
-        'mcd': 'mcdonald'
+        'mcd': 'mcdonald',
+        'apply': 'daftar',
+        'bikin': 'daftar',
+        'buat': 'daftar'
         # 'manajemen': 'komisaris dan direktur',
         # 'stakeholder': 'komisaris dan direktur',
         # 'di medan': 'di kota medan'

@@ -22,7 +22,7 @@ import yaml
 
 from src.utils import preprocess_input
 
-generation_config = {"temperature": 0.5}
+generation_config = {"temperature": 0.25}
 # safety_settings = 
 
 gemini_api_key = st.secrets["gemini_api_key"]
@@ -81,7 +81,6 @@ template = ("""You are a knowledgeable and friendly virtual assistant of Bank Si
     * Offer additional assistance or information when possible.
     * Use a conversational and engaging tone.
     * Maintain a professional demeanor.
-    * Do appropriate paraphrase to avoid RECITATION issue.
 
 
     **Additional Considerations**
@@ -158,7 +157,7 @@ def main():
     with st.sidebar:
         options = ["gemini-1.5-flash", "gemini-1.5-pro-latest"]
         selected_option = st.selectbox("Select Gemini Model:", options, index= 0)
-        st.write("""Elisa bisa bantu kamu mengetahui informasi promo dan layanan berikut:  \n1. Info Promosi  \n2. Info Produk Tabungan  \n3. Info Produk Deposito  \n4. dll  \n\nContoh pertanyaan:  \n1. Promo apa saja yang tersedia?  \n2. Gimana cara apply cc korporat?  \n3. List promo yang tersedia di medan!  \n4. Apakah promo magal bisa pakai cc korporat?""" 
+        st.write("""Elisa bisa bantu kamu mengetahui informasi promo dan layanan berikut:  \n1. Info Promosi  \n2. Info Produk Tabungan  \n3. Info Produk Deposito  \n4. dll  \n\nContoh pertanyaan:  \n1. Promo apa saja yang tersedia?  \n2. Gimana cara daftar cc korporat?  \n3. List promo yang tersedia di medan!  \n4. Apakah promo magal bisa pakai cc korporat?""" 
 )
         # Main content area for displaying chat messages
         st.button('Clear Chat History', on_click=clear_chat_history)
