@@ -148,8 +148,7 @@ def get_sources(metadata):
 def main():
     # App title
     st.set_page_config(page_title="AIDSU Chatbot RAG👩‍🦰💬")
-    st.title('AIDSU Chatbot Promotion RAG using Gemini!👩‍🦰💬')
-    st.write("Welcome to the chat!")
+    st.title('AIDSU - Chat to Bank Sinarmas Website')
 
     # Clear chat everytime pages move
     # clear_chat_history()
