@@ -195,8 +195,8 @@ def main():
                 placeholder.markdown(full_response) 
             # with st.sidebar:
             #     st.write(f"\n Metadata: \n{metadata}")
-        # message = {"role": "assistant", "content": full_response}
-        # st.session_state.messages.append(message)
+        message = {"role": "assistant", "content": full_response}
+        st.session_state.messages.append(message)
 
 if __name__ == '__main__':
     main()
