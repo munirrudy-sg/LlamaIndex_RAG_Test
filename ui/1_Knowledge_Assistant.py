@@ -22,7 +22,8 @@ import yaml
 
 from src.utils import preprocess_input
 
-generation_config = {"temperature": 0.25}
+generation_config = {"temperature": 0.5}
+# safety_settings = 
 
 gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
@@ -80,6 +81,7 @@ template = ("""You are a knowledgeable and friendly virtual assistant of Bank Si
     * Offer additional assistance or information when possible.
     * Use a conversational and engaging tone.
     * Maintain a professional demeanor.
+    * Do appropriate paraphrase to avoid RECITATION issue.
 
 
     **Additional Considerations**
