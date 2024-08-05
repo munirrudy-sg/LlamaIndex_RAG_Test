@@ -148,7 +148,7 @@ def get_sources(metadata):
 def main():
     # App title
     st.set_page_config(page_title="AIDSU Chatbot RAG👩‍🦰💬")
-    st.title('AIDSU - Chat to Bank Sinarmas Website')
+    st.title('AIDSU - Bank Sinarmas Knowledge')
 
     # Clear chat everytime pages move
     # clear_chat_history()

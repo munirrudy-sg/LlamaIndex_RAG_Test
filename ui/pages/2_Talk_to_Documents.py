@@ -51,9 +51,8 @@ def clear_chat_history():
     
 def main():
     st.set_page_config(page_title="Chat with multiple DOCUMENTs",page_icon="🤖")
-    st.title("Chat with document files using Gemini🤖")
+    st.title("AIDSU - Chat With Documents")
     st.subheader("Your documents")
-    st.write("Welcome to the chat!")
 
     # Clear chat everytime pages move
     # clear_chat_history()
