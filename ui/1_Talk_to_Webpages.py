@@ -32,41 +32,41 @@ gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="mod
 Settings.embed_model = gemini_embedding_model
 Settings.context_window = 50000
 
-### For Chroma
-# collection_name = "promosi-bsim-20240718"
-
 # Load the YAML data
 config = yaml.safe_load(open('config/config.yaml', 'r'))
 
-# # Load from disk
-# load_client = chromadb.PersistentClient(path="./chroma_db")
+### For Chroma
+collection_name = "promosi-bsim-20240718"
 
-# # Fetch the collection
-# chroma_collection = load_client.get_collection(collection_name)
+# Load from disk
+load_client = chromadb.PersistentClient(path="./chroma_db")
 
-# configuration = {
-#     "client_type": "PersistentClient",
-#     "path": "./chroma_db"
-# }
-## Fetch the vector store
-# vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
+# Fetch the collection
+chroma_collection = load_client.get_collection(collection_name)
 
-# # Get the index from the vector store
-# index = VectorStoreIndex.from_vector_store(
-#     vector_store,
-#     similarity_top_k=7
-# )
+configuration = {
+    "client_type": "PersistentClient",
+    "path": "./chroma_db"
+}
+# Fetch the vector store
+vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
+
+# Get the index from the vector store
+index = VectorStoreIndex.from_vector_store(
+    vector_store,
+    similarity_top_k=7
+)
 
 ## For Milvus
-vector_store = MilvusVectorStore(
-    uri="./milvus_db/milvus_vdb_bsim_20240801.db",
-    dim=768,
-    overwrite=False,
-    enable_sparse=True,
-    hybrid_ranker="RRFRanker",
-    hybrid_ranker_params={"k": 100},
-)
-index = VectorStoreIndex.from_vector_store(vector_store)
+# vector_store = MilvusVectorStore(
+#     uri="./milvus_db/milvus_vdb_bsim_20240801.db",
+#     dim=768,
+#     overwrite=False,
+#     enable_sparse=True,
+#     hybrid_ranker="RRFRanker",
+#     hybrid_ranker_params={"k": 100},
+# )
+# index = VectorStoreIndex.from_vector_store(vector_store)
 
 template = ("""You are a knowledgeable and friendly virtual assistant for Bank Sinarmas, aiming to provide exceptional customer service.
     Leverage the provided context to tailor your responses accurately and provide relevant information.
