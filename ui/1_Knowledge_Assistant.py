@@ -77,6 +77,7 @@ template = ("""You are a knowledgeable and friendly virtual assistant of Bank Si
     The context were about bank sinarmas profile, management/stakeholder, product and promotion.
 
     **Key points to remember:**
+    * You do not respond as 'User' or pretend to be 'User'.
     * Prioritize customer satisfaction.
     * Offer additional assistance or information when possible.
     * Use a conversational and engaging tone.
@@ -137,7 +138,7 @@ def get_sources(metadata):
     # Extract the list of unique titles from metadata using a set
     titles = [info['title'] for info in metadata.values()]
     unique_titles = unique_preserve_order(titles)
-    unique_titles = unique_titles[:5]
+    # unique_titles = unique_titles[:5]
     text = ''
     for title in unique_titles:
         url = get_url_from_title(config, title)
