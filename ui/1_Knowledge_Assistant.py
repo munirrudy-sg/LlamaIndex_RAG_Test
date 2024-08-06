@@ -22,7 +22,8 @@ import yaml
 
 from src.utils import preprocess_input
 
-generation_config = {"temperature": 0.35}
+temperature = st.secrets['knowledge_assistant_tmp']
+generation_config = {"temperature": temperature}
 # safety_settings = 
 
 gemini_api_key = st.secrets["gemini_api_key"]
