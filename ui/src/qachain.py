@@ -116,9 +116,10 @@ class QAChain:
         result = qa(query)
         answer = result['result']
         searchDocs = vstore.similarity_search(result['result'])
-        metadata = [j.metadata for j in searchDocs][0]
+        metadata = [j.metadata for j in searchDocs][:3]
+        page_no = ",".join(set([i['page_no']for i in metadata]))
         answer_with_source =  f"""{answer}\n\n
-Sumber File : {metadata['file_name']} \n\nHalaman : {metadata['page_no']} """
+Sumber File : {metadata[0]['file_name']} \n\nHalaman : {page_no}"""
         # self.cache.cache_query_response(query=query, response=result)
         
         return answer_with_source
