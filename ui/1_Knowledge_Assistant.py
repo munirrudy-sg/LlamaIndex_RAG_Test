@@ -6,6 +6,7 @@ import sqlite3
 import streamlit as st
 from streamlit_feedback import streamlit_feedback
 import uuid
+from datetime import datetime
 
 import chromadb
 import speech_recognition as sr
@@ -185,7 +186,8 @@ def init_db():
                   question TEXT, 
                   response TEXT, 
                   response_type TEXT, 
-                  user_feedback TEXT, 
+                  user_feedback TEXT,
+                  timestamp TEXT, 
                   session_id TEXT)''')  # Store session_id
     conn.commit()
     conn.close()
@@ -208,9 +210,14 @@ def handle_feedback(user_response, result):
 
     response_type = 'good' if user_response['score']=='👍' else 'bad'
     feedback = user_response['text']
+    # Get the current timestamp
+    timestamp = datetime.now()
+
+    # Format the timestamp as a string in 'yyyymmddhhmmss' format
+    timestamp_str = timestamp.strftime('%Y%m%d%H%M%S')
 
     # Store feedback in the database
-    store_feedback(st.session_state.messages[-2]["content"], result, response_type, feedback, st.session_state.session_id)
+    store_feedback(st.session_state.messages[-2]["content"], result, response_type, feedback, timestamp_str, st.session_state.session_id)
         
 
     # Reset session ID after feedback is submitted
