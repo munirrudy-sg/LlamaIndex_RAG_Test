@@ -1,7 +1,7 @@
-# __import__("pysqlite3")
-# import sys
+__import__("pysqlite3")
+import sys
 
-# sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 import sqlite3
 import streamlit as st
 from streamlit_feedback import streamlit_feedback
@@ -30,10 +30,11 @@ from src.utils import preprocess_input
 if "session_id" not in st.session_state:
     st.session_state["session_id"] = str(uuid.uuid4())
 
-generation_config = {"temperature": 0}
+temperature = st.secrets['knowledge_assistant_tmp']
+generation_config = {"temperature": temperature}
 # safety_settings = 
 
-gemini_api_key = "AIzaSyB_erP8BwO83XfZSOkl7i-brJ5OefHMm_4"
+gemini_api_key = st.secrets["gemini_api_key"]
 gemini_embedding_model = GeminiEmbedding(api_key=gemini_api_key, model_name="models/embedding-001")
 
 # Set Global settings
