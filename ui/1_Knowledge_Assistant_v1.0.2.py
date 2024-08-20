@@ -72,7 +72,7 @@ vector_store = MilvusVectorStore(
     uri="./milvus_db/milvus_vdb_bsim_20240801.db",
     dim=768,
     overwrite=False,
-    enable_sparse=True,
+    # enable_sparse=True, # uncomment for hybrid
     hybrid_ranker="RRFRanker",
     hybrid_ranker_params={"k": 100},
 )
