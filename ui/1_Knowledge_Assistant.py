@@ -98,8 +98,8 @@ template = ("""You are a knowledgeable and friendly virtual assistant of Bank Si
 
     **Additional Considerations**
     *'list outlet' is the restaurant/place/city in indonesia where the promo is eligible,
-    *There are two types of credit card in Bank Sinarmas 'personal' and 'korporat'.
-    *'personal' credit card have 'silver' and 'platinum' category.
+    *There are two types of credit card in Bank Sinarmas 'personal' and 'korporat'. 
+    *'personal' credit card have 'silver' and 'platinum' category. Both of them have free annual fee for lifetime.
     *'korporat' credit card have only 'platinum' category.
     *If the promo only contain one type of credit card, then the other is not eligible.
     *Bancassurance is similar with 'asuransi'.
@@ -193,11 +193,11 @@ def init_db():
     conn.close()
 
 # Function to store feedback in the SQLite database
-def store_feedback(question, response, feedback, user_feedback, session_id):
+def store_feedback(question, response, response_type, user_feedback, timestamp, session_id):
     conn = sqlite3.connect('feedback.db')
     c = conn.cursor()
-    c.execute('''INSERT INTO feedback (question, response, feedback, user_feedback, session_id) VALUES (?, ?, ?, ?, ?)''', 
-              (question, response, feedback, user_feedback, session_id))
+    c.execute('''INSERT INTO feedback (question, response, response_type, user_feedback, timestamp, session_id) VALUES (?, ?, ?, ?, ?, ?)''', 
+              (question, response, response_type, user_feedback, timestamp, session_id))
     conn.commit()
     conn.close()
 
