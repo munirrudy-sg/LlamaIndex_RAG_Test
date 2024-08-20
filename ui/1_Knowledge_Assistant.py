@@ -73,8 +73,8 @@ vector_store = MilvusVectorStore(
     dim=768,
     overwrite=False,
     # enable_sparse=True, # uncomment for hybrid
-    hybrid_ranker="RRFRanker",
-    hybrid_ranker_params={"k": 100},
+    # hybrid_ranker="RRFRanker",
+    # hybrid_ranker_params={"k": 100},
 )
 index = VectorStoreIndex.from_vector_store(vector_store)
 
