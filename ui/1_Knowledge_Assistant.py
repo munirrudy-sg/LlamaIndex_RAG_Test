@@ -179,7 +179,7 @@ def recognize_speech_from_microphone():
 
 # Initialize the SQLite database
 def init_db():
-    conn = sqlite3.connect('feedback.db')
+    conn = sqlite3.connect('./feedback/feedback.db')
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS feedback
                  (id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -194,7 +194,7 @@ def init_db():
 
 # Function to store feedback in the SQLite database
 def store_feedback(question, response, response_type, user_feedback, timestamp, session_id):
-    conn = sqlite3.connect('feedback.db')
+    conn = sqlite3.connect('./feedback/feedback.db')
     c = conn.cursor()
     c.execute('''INSERT INTO feedback (question, response, response_type, user_feedback, timestamp, session_id) VALUES (?, ?, ?, ?, ?, ?)''', 
               (question, response, response_type, user_feedback, timestamp, session_id))
@@ -307,6 +307,5 @@ def main():
                 on_submit=handle_feedback,
                 kwargs={"result": full_response},
             )
-    print(feedback)
 if __name__ == "__main__":
     main()
