@@ -69,7 +69,7 @@ config = yaml.safe_load(open('config/config.yaml', 'r'))
 
 ## For Milvus
 vector_store = MilvusVectorStore(
-    uri="./milvus_db/milvus_vdb_bsim_20240801.db",
+    uri="./milvus_db/milvus_20240820.db",
     dim=768,
     overwrite=False,
     # enable_sparse=True, # uncomment for hybrid
@@ -96,8 +96,8 @@ template = ("""You are a knowledgeable and friendly virtual assistant of Bank Si
     **Additional Considerations**
     *'list outlet' is the restaurant/place/city in indonesia where the promo is eligible,
     *There are two types of credit card in Bank Sinarmas 'personal' and 'korporat'.
-    * 'personal' credit card have 'silver' and 'platinum' category.
-    * 'korporat' credit card have only 'platinum' category.
+    *'personal' credit card have 'silver' and 'platinum' category.
+    *'korporat' credit card have only 'platinum' category.
     *If the promo only contain one type of credit card, then the other is not eligible.
     *Bancassurance is similar with 'asuransi'.
     *Data or context is provided from Bank Sinarmas website.
