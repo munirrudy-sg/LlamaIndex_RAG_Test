@@ -128,7 +128,6 @@ def generate_gemini_response(prompt_input, selected_option):
     # query_engine = index.as_query_engine(text_qa_template=llm_prompt, similarity_top_k=7, llm=llm, response_mode="simple_summarize", vector_store_query_mode="hybrid") # for hybrid
     query_engine = index.as_query_engine(text_qa_template=llm_prompt, similarity_top_k=7, llm=llm, response_mode="simple_summarize")
     response = query_engine.query(prompt_input)
-    print(response)
 
     # Step 7: Return the generated text
     return response.response, response.metadata
