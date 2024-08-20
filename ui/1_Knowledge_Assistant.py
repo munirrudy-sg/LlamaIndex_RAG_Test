@@ -72,6 +72,7 @@ vector_store = MilvusVectorStore(
     uri="./milvus_db/milvus_20240820.db",
     dim=768,
     overwrite=False,
+    collection_name = "bsim_web_20240820"
     # enable_sparse=True, # uncomment for hybrid
     # hybrid_ranker="RRFRanker",
     # hybrid_ranker_params={"k": 100},
