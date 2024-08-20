@@ -77,7 +77,8 @@ vector_store = MilvusVectorStore(
     # hybrid_ranker="RRFRanker",
     # hybrid_ranker_params={"k": 100},
 )
-index = VectorStoreIndex.from_vector_store(vector_store)
+storage_context = StorageContext.from_defaults(vector_store=vector_store)
+index = VectorStoreIndex.from_vector_store(vector_store, storage_context=storage_context)
 
 template = ("""You are a knowledgeable and friendly virtual assistant of Bank Sinarmas, aiming to provide exceptional customer service.
     Leverage the provided context to tailor your responses accurately and provide exact information with context.
